@@ -1,11 +1,14 @@
 import Sidebar from "../components/SideBar";
 import StatCard from "../components/StatCard";
 import { Book, Upload, Users, Download } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 export default function TeacherDashboard() {
+  const { user } = useAuth();
+
   return (
     <div className="flex bg-gray-100 min-h-screen">
-      <Sidebar role = "teacher"/>
+      <Sidebar role={user?.role} />
 
       <div className="flex-1 p-6">
         {/* Header */}

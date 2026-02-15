@@ -12,7 +12,7 @@ export default function Input({ icon, type = "text", placeholder, error, ...prop
         <input
           type={type}
           placeholder={placeholder}
-          className="w-full outline-none bg-transparent text-sm"
+          className="w-full bg-transparent text-sm border-0 outline-none focus:outline-none focus:ring-0"
           {...props} // This spreads value and onChange onto the actual <input>
         />
       </div>

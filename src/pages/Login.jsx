@@ -55,7 +55,7 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             error={errors.password}
-          />
+          />                                                          
 
           <button 
             type="submit" 

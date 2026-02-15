@@ -2,11 +2,14 @@ import Sidebar from "../components/SideBar";
 import StatCard from "../components/StatCard";
 import Footer from "../components/Footer"
 import { BookOpen, FileText, Download, Bell } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 export default function StudentDashboard() {
+  const { user } = useAuth();
+
   return (
     <div className="flex bg-gray-100 min-h-screen">
-      <Sidebar role = "student"/>
+      <Sidebar role={user?.role} />
 
       <div className="flex-1 p-6">
         {/* Header */}

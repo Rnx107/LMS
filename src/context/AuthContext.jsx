@@ -5,7 +5,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  // Set a default test user for development - change role to "student" to test student pages
+  const [user, setUser] = useState({ email: "teacher@test.com", role: "teacher" });
 
   const login = (email, password) => {
     // Dummy login logic
