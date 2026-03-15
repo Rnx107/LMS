@@ -1,5 +1,5 @@
-import SideBar from "../components/SideBar";
-import Input from "../components/Input";
+import SideBar from "../../components/SideBar";
+import Input from "../../components/Input";
 
 export default function CreateCourse() {
   return (

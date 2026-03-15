@@ -1,6 +1,6 @@
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/SideBar";
-import { useAuth } from "../context/AuthContext";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/SideBar";
+import { useAuth } from "../../context/AuthContext";
 
 export default function MyCourses() {
   const { user } = useAuth();
