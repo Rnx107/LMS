@@ -1,41 +1,42 @@
-import { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+/**
+ * Auth Context
+ * 
+ * Provides authentication state and methods to the application
+ */
+
+import { createContext, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../stores/authStore';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  // Set a default test user for development - change role to "student" to test student pages
-  const [user, setUser] = useState({ email: "teacher@test.com", role: "teacher" });
-
-  const login = (email, password) => {
-    // Dummy login logic
-    const role = email.includes("teacher") ? "teacher" : "student";
-
-    const loggedUser = { email, role };
-    setUser(loggedUser);
-
-    if (role === "teacher") navigate("/teacher");
-    else navigate("/student");
-  };
-
-  const signup = (data) => {
-    setUser(data);
-    data.role === "teacher"
-      ? navigate("/teacher")
-      : navigate("/student");
-  };
+  const { user, isAuthenticated, logout: storeLogout } = useAuthStore();
 
   const logout = () => {
-    setUser(null);
-    navigate("/");
+    storeLogout();
+    navigate('/login');
+  };
+
+  const value = {
+    user,
+    isLoading: false,
+    isAuthenticated,
+    logout,
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

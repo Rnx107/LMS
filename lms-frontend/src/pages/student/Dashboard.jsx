@@ -9,7 +9,7 @@ import {
   FileText,
   Download,
 } from 'lucide-react'
-import { useEnrollments } from '../../hooks/useEnrollments'
+import { useEnrollments } from '../../hooks/useEnrollment'
 import { useUploads } from '../../hooks/useUploads'
 import useAuthStore from '../../stores/authStore'
 

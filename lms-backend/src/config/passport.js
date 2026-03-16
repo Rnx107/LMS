@@ -1,9 +1,20 @@
+/**
+ * Passport Configuration for Google OAuth
+ * 
+ * Implements OAuth2 client flow
+ */
+
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { env } from './env.js';
 import User from '../models/User.js';
 
 export const configurePassport = () => {
+  if (!env.google.clientId) {
+    console.log('Google OAuth not configured');
+    return;
+  }
+
   passport.use(
     new GoogleStrategy(
       {
@@ -16,11 +27,9 @@ export const configurePassport = () => {
         try {
           const email = profile.emails[0].value;
           
-          // Check if user exists
           let user = await User.findOne({ email });
           
           if (user) {
-            // Link Google ID if not already linked
             if (!user.googleId) {
               user.googleId = profile.id;
               await user.save();
@@ -28,15 +37,14 @@ export const configurePassport = () => {
             return done(null, user);
           }
           
-          // Create new user from Google profile
           user = await User.create({
             googleId: profile.id,
             email,
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
             avatar: profile.photos[0]?.value,
-            emailVerified: true, // Google already verified
-            password: Math.random().toString(36).slice(-16), // Random password
+            emailVerified: true,
+            password: Math.random().toString(36).slice(-16),
           });
           
           done(null, user);
